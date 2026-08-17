@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeSync AI | Notion Tracker</title>
+    <meta name="description" content="AI-powered time tracking sync for Notion.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <h1>TimeSync AI</h1>
+            </div>
+            <p class="subtitle">Categorize and sync your daily logs to Notion instantly.</p>
+        </header>
+
+        <main>
+            <section class="input-section" id="inputSection">
+                <div class="card">
+                    <label for="logInput">Paste your daily logs</label>
+                    <p class="hint">e.g. <code>08.00 - 08.10 - 0.2H - quick wash</code></p>
+                    <textarea id="logInput" placeholder="Paste your raw text entries here..." rows="10"></textarea>
+                    <div id="inputError" class="error-message hidden">Please provide log entries to process.</div>
+                    <button id="processBtn" class="primary-btn">
+                        <span id="processBtnText">Process Logs with AI</span>
+                        <svg id="processBtnIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <section class="review-section hidden" id="reviewSection">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Review & Sync</h2>
+                        <span id="syncStatus" class="status-badge hidden">Syncing...</span>
+                    </div>
+                    <p class="hint">Review the AI's suggestions. Items in red need manual correction before syncing.</p>
+                    
+                    <div class="table-container">
+                        <table id="reviewTable">
+                            <thead>
+                                <tr>
+                                    <th>Original Text</th>
+                                    <th>Duration</th>
+                                    <th>Main Type</th>
+                                    <th>Sub Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reviewTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="actions">
+                        <button id="backBtn" class="secondary-btn">Back</button>
+                        <button id="syncBtn" class="primary-btn sync-btn">
+                            <span>Sync to Notion</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

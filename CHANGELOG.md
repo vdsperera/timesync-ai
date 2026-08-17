@@ -1,0 +1,19 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+The format is based on [Keep a Changelog](https://keepachangelog.com/).
+
+## [1.0.0] - 2026-08-18
+
+### Added
+- Express backend for secure API proxying and key management (TASK-001)
+- `/api/categories` endpoint to dynamically fetch Notion schema (TASK-003)
+- `/api/parse` endpoint to categorize raw text using Gemini AI (TASK-004)
+- `/api/sync` endpoint with partial failure handling for Notion API (TASK-005)
+- Vanilla JS Frontend with a premium dark-mode aesthetic (TASK-006)
+- Interactive review table to validate and modify AI suggestions (TASK-007)
+- Robust error handling and DOM sanitization for AI outputs (TASK-008)
+- Automated API test suite using Jest and Supertest
+
+### Security
+- Masked raw SDK `error.message` from API responses (SEC-001)
+- Implemented payload length validation (Max 50) for batch API endpoints

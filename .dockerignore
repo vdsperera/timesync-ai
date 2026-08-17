@@ -1,0 +1,8 @@
+node_modules/
+tests/
+docs/
+.env
+.git/
+.gitignore
+README.md
+CHANGELOG.md
