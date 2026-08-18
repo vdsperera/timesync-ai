@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - Updated the Web UI to dynamically filter the `Sub Type` dropdown based on the selected `Main Type` in the row.
 - Updated AI prompt to extract dates directly from log entries and format them as `YYYY-MM-DD`.
 - Implemented `localStorage` auto-drafting in the Web UI to persist manual edits before syncing.
+- Fixed a Notion sync bug (`502 Bad Gateway`) by correcting the exact case-sensitive column name for `"Regular hours"`.
 
 ## [1.0.0] - 2026-08-18
 

@@ -243,7 +243,7 @@ app.post('/api/sync', async (req, res) => {
                 if (entry.duration) {
                     const parsedHours = parseFloat(entry.duration.replace(/[^\d.-]/g, ''));
                     if (!isNaN(parsedHours)) {
-                        properties["Regular Hours"] = { number: parsedHours };
+                        properties["Regular hours"] = { number: parsedHours };
                     }
                 }
                 if (entry.mainType) {
