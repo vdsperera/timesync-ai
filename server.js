@@ -52,7 +52,7 @@ async function getNotionCategories() {
     if (subTypes.length === 0) {
         subTypes.push(
             // FAMGO
-            "Myself", "Family Member", "House Maintenance", "Pets",
+            "Myself", "Family Member", "House Maintenance", "Pets", "Chores",
             // ATGO
             "Meditation/Mindfulness", "Journaling/Reflection", "Therapy/Mental Health", "Goal Setting",
             // FINGO
@@ -112,6 +112,7 @@ app.post('/api/parse', async (req, res) => {
             "Family Member": "Time spent helping, talking to, or caring for family members",
             "House Maintenance": "Cleaning, cooking, DIY, grocery shopping",
             "Pets": "Walking the dog, feeding pets",
+            "Chores": "General errands, cleaning, and routine household tasks",
             // ATGO
             "Meditation/Mindfulness": "Quiet time, breathing exercises",
             "Journaling/Reflection": "Planning your week, writing thoughts",
