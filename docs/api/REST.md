@@ -82,7 +82,7 @@ POST /api/parse
 ```http
 POST /api/sync
 ```
-**Description:** Appends a batch of approved entries to the Notion database. Handles Notion rate limiting by returning partial successes to the client.
+**Description:** Appends a batch of approved entries to the Notion database. Handles Notion rate limiting by returning partial successes to the client. *Behavior Update:* Implements a Daily Overwrite Sync Strategy. Before appending, the API identifies all unique dates in the payload, queries Notion via native fetch, and archives existing entries matching those dates to prevent duplicates.
 **Authentication:** None (Localhost only)
 
 **Request:**

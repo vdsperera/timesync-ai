@@ -76,6 +76,20 @@ Estimated size: M
 Risk / notes: Must handle Notion rate limits and return partial successes accurately to mitigate data loss.
 ```
 
+```
+ID: TASK-010
+Title: Implement Daily Overwrite Sync Strategy
+Layer: 4
+Linked stories: US-005
+Linked component: Local Backend API
+Depends on: TASK-005
+Input: Issue with duplicate entries on re-sync.
+Output: Modify `POST /api/sync` to identify unique dates in the payload, query Notion for existing entries on those dates using native fetch, and archive them before appending the new entries.
+Acceptance condition: Syncing the same day twice does not result in duplicates; old entries are archived in Notion.
+Estimated size: M
+Risk / notes: Destructive operation; depends on accurate date matching.
+```
+
 ## Layer 5: UI & integration
 
 ```
@@ -118,6 +132,20 @@ Output: Dropdowns in the review table populate with valid Notion categories. Mod
 Acceptance condition: Successful rows are removed from the UI. Failed rows remain with an error message and a "Retry Sync" option.
 Estimated size: M
 Risk / notes: Critical path for user trust. Unsynced data must not disappear on error.
+```
+
+```
+ID: TASK-009
+Title: Implement interactive Draft Library with LocalStorage
+Layer: 5
+Linked stories: US-004
+Linked component: Web UI
+Depends on: TASK-008
+Input: User feedback on drafting multiple days.
+Output: Implement draft management grouped by date in `localStorage`, adding a "Save to Library" button, an "Auto-cleanup on sync" toggle, and a "Saved Drafts" panel to the home screen. Also add a "Delete" button to individual rows.
+Acceptance condition: User can save multiple drafts, load them, delete individual rows, and auto-cleanup removes them upon successful sync.
+Estimated size: M
+Risk / notes: UI state management complexity.
 ```
 
 ## Coverage Matrix
