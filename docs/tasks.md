@@ -190,3 +190,17 @@ Output:
 3. Ability to process the extracted dates one by one or in bulk.
 Estimated size: L
 ```
+
+```
+ID: TASK-013
+Title: Configurable database schema & generalized AI parsing
+Layer: 3, 4, 5
+Linked component: Local Backend API, Web UI
+Input: User feedback to make the app useful for a wider audience with varying Notion setups.
+Output: 
+1. Move the hardcoded dependency on "Main Type" and "Sub Type" to an environment or UI-based configuration.
+2. Dynamically fetch the configured properties from Notion and dynamically generate the AI prompt to extract those specific fields.
+3. Dynamically render the review table columns based on the configured properties.
+Acceptance condition: A user can configure the app to sync to a database that has entirely different categorical properties (e.g., "Client" and "Project") without changing the source code.
+Estimated size: L
+```
