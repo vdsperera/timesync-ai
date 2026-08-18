@@ -203,4 +203,58 @@ Output:
 3. Dynamically render the review table columns based on the configured properties.
 Acceptance condition: A user can configure the app to sync to a database that has entirely different categorical properties (e.g., "Client" and "Project") without changing the source code.
 Estimated size: L
+
+
+## Architectural Suggestions (Under Review)
+
+The following items are architectural suggestions pending review and decision.
+
+```text
+ID: ARCH-001
+Title: Data Integrity during Notion Sync (Soft Deletes / Upserts)
+Layer: 4
+Linked component: Local Backend API
+Input: Notion sync currently deletes existing pages for a given date before creating new ones.
+Output: Implement soft deletes or upserts based on a deterministic hash of the entry to prevent data loss during partial sync failures.
+Estimated size: M
+```
+
+```text
+ID: ARCH-002
+Title: UI State Persistence (LocalStorage)
+Layer: 5
+Linked component: Web UI
+Input: UI state (review queue) is currently in-memory and lost on page refresh.
+Output: Implement `localStorage` or `sessionStorage` in the Vanilla JS frontend to persist the review queue state, hydrating the UI on page load.
+Estimated size: S
+```
+
+```text
+ID: ARCH-003
+Title: Rate Limiting & Circuit Breaking Implementation
+Layer: 4
+Linked component: Local Backend API
+Input: Notion API rate limiting (`429 Too Many Requests`).
+Output: Implement a queuing mechanism (e.g., `bottleneck` or `p-retry`) on the backend to throttle requests and automatically retry based on the `Retry-After` header.
+Estimated size: M
+```
+
+```text
+ID: ARCH-004
+Title: Pluggable AI / Strategy Pattern for Parsers
+Layer: 4
+Linked component: Local Backend API
+Input: Backend is tightly coupled to the Gemini API.
+Output: Implement a Strategy Pattern for the AI parser to easily swap between different AI providers (e.g., OpenAI, Anthropic, or local Ollama) using an environment variable.
+Estimated size: M
+```
+
+```text
+ID: ARCH-005
+Title: Strict Input/Output Validation Boundary (Zod)
+Layer: 3, 4
+Linked component: Local Backend API
+Input: Implicit trust between frontend payloads and Gemini responses.
+Output: Introduce a validation library like `Zod` to strictly validate incoming `/api/sync` payloads and Gemini JSON responses before processing.
+Estimated size: S
 ```
