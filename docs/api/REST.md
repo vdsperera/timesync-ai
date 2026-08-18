@@ -15,7 +15,7 @@ GET /api/categories
 *Success (200 OK)*
 ```json
 {
-  "mainTypes": ["atgo", "famgo", "edgo"],
+  "mainTypes": ["ATGO", "FINGO", "FAMGO", "PHYGO", "EDGO", "PLEAGO", "CARGO"],
   "subTypes": ["hygiene", "general coding"]
 }
 ```

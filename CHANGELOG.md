@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [Unreleased]
+
+### Changed
+- Hardcoded fallback values for `Main Type` in Notion category fetcher to explicitly use user-provided list: `ATGO`, `FINGO`, `FAMGO`, `PHYGO`, `EDGO`, `PLEAGO`, `CARGO`.
+- Injected semantic definitions for all `Main Type` acronyms into the Gemini system prompt to ensure highly accurate categorization.
+
 ## [1.0.0] - 2026-08-18
 
 ### Added

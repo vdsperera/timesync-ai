@@ -28,7 +28,7 @@
 - **Response shape**:
   ```json
   {
-    "mainTypes": ["atgo", "famgo", "edgo", ".carg"],
+    "mainTypes": ["ATGO", "FINGO", "FAMGO", "PHYGO", "EDGO", "PLEAGO", "CARGO"],
     "subTypes": ["English", "general coding", "team lead"]
   }
   ```
@@ -135,10 +135,11 @@
 
 ### ADR-002
 **Title:** Dynamic vs Hardcoded Notion Categories
-**Status:** Accepted
-**Context:** US-002 flagged the need to clarify if Notion categories should be hardcoded in the app or fetched dynamically.
+**Status:** Accepted (Amended)
+**Context:** US-002 flagged the need to clarify if Notion categories should be hardcoded in the app or fetched dynamically. A later requirement mandated that `Main Type` must strictly adhere to a specific list regardless of Notion schema, while `Sub Type` can remain dynamic.
 **Options considered:**
-1. Hardcode categories in a `config.json` file. (Requires manual update every time a category is added in Notion).
+1. Hardcode all categories in a `config.json` file. (Requires manual update every time a category is added in Notion).
 2. Fetch dynamically from Notion Database Schema on load. (Always up to date, but adds a network request on startup).
-**Decision:** Option 2. The cost of one network request on startup is negligible, and the benefit of always being perfectly in sync with the Notion schema prevents silent failures and AI hallucinations.
-**Consequences:** Startup might take 1-2 seconds longer if the network is slow, but maintenance burden is zero.
+3. Hybrid approach: Hardcode `Main Type` to strictly enforce business rules, but fetch `Sub Type` dynamically.
+**Decision:** Option 3. The `Main Type` is hardcoded to enforce strict usage of tags like `ATGO`, `FINGO`, etc., preventing AI hallucination outside these bounds. `Sub Type` remains dynamically fetched so the user can freely add new activities in Notion without touching the codebase.
+**Consequences:** Partial maintenance burden if the strict `Main Type` list changes, but optimal balance of strictness and flexibility.
