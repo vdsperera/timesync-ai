@@ -185,7 +185,7 @@ Layer: 4, 5
 Linked component: Web UI, Local Backend API
 Input: User desire to automatically pull entries from daily files in a specific local directory instead of copy-pasting.
 Output: 
-1. A backend endpoint to scan a local directory for files (named by date) and intelligently extract only the time-tracking lines, ignoring unrelated journaling info.
+1. A backend endpoint to scan a local directory for files (named by date) and intelligently extract only the time-tracking lines using a "Delimiter Strategy" (e.g., ignoring everything above a specific marker like `---LOGS---` to separate actual logs from schedules or templates).
 2. A frontend UI to trigger the scan, view the extracted raw text grouped by date, and allow human review/editing of the raw text *before* sending it to the AI for processing.
 3. Ability to process the extracted dates one by one or in bulk.
 Estimated size: L
