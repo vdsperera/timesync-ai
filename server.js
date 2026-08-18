@@ -93,8 +93,8 @@ app.get('/api/categories', async (req, res) => {
 
 app.post('/api/parse', async (req, res) => {
     try {
-        const entries = req.body?.entries;
-        if (!Array.isArray(entries) || entries.length === 0) {
+        const { entries } = req.body;
+        if (!entries || !Array.isArray(entries)) {
             return res.status(400).json({ error: 'Missing or invalid entries array' });
         }
         if (entries.length > 50) {
@@ -156,6 +156,8 @@ app.post('/api/parse', async (req, res) => {
             "Job Search": "Updating resume, applying for roles"
         };
 
+        const todayDate = new Date().toISOString().split('T')[0];
+
         const prompt = `You are a data parsing assistant. Your task is to extract information from an array of free-form time tracking text entries and categorize them strictly into the provided Notion categories.
 
 Valid Main Types: ${JSON.stringify(categories.mainTypes)}
@@ -163,12 +165,16 @@ Main Type Definitions: ${JSON.stringify(mainTypeDefinitions, null, 2)}
 Valid Sub Types: ${JSON.stringify(categories.subTypes)}
 Sub Type Definitions: ${JSON.stringify(subTypeDefinitions, null, 2)}
 
-For each entry, extract the duration (e.g. "0.2H") and suggest the best matching Main Type and Sub Type. If a line is malformed or you cannot confidently categorize it, set isAiFailure to true and leave duration, mainType, and subType as empty strings. DO NOT hallucinate categories that are not in the valid lists.
+Today's date is: ${todayDate}.
 
-Return ONLY a valid JSON array of objects with the exact following schema, nothing else:
+For each entry, extract the duration (e.g. "0.2H"). Also extract the date if one is mentioned (e.g. "yesterday", "Aug 17"). If a date is mentioned, convert it to YYYY-MM-DD format. If no date is mentioned, default to today's date (${todayDate}).
+Then suggest the best matching Main Type and Sub Type. If a line is malformed or you cannot confidently categorize it, set isAiFailure to true and leave duration, mainType, and subType as empty strings. DO NOT hallucinate categories that are not in the valid lists.
+
+Return a JSON array of objects with this exact structure:
 [
   {
     "originalText": "the exact string provided",
+    "date": "YYYY-MM-DD",
     "duration": "extracted duration",
     "mainType": "closest valid main type",
     "subType": "closest valid sub type",

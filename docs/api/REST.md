@@ -55,9 +55,10 @@ POST /api/parse
 {
   "results": [
     {
-      "originalText": "08.00 - 08.10 - 0.2H - morning wash",
+      "originalText": "08.00 - 08.10 - 0.2H - Aug 17 quick wash",
+      "date": "2026-08-17",
       "duration": "0.2H",
-      "mainType": "famgo",
+      "mainType": "PHYGO",
       "subType": "hygiene",
       "isAiFailure": false
     }

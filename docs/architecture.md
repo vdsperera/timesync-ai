@@ -45,7 +45,7 @@
 - **Request shape**:
   ```json
   {
-    "entries": ["08.00 - 08.10 - 0.2H - quick wash", "..."]
+    "entries": ["08.00 - 08.10 - 0.2H - Aug 17 quick wash"]
   }
   ```
 - **Response shape**:
@@ -53,9 +53,10 @@
   {
     "results": [
       {
-        "originalText": "08.00 - 08.10 - 0.2H - quick wash",
+        "originalText": "08.00 - 08.10 - 0.2H - Aug 17 quick wash",
+        "date": "2026-08-17",
         "duration": "0.2H",
-        "mainType": "famgo",
+        "mainType": "PHYGO",
         "subType": "hygiene",
         "isAiFailure": false
       }

@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - Injected semantic definitions for all `Main Type` acronyms into the Gemini system prompt to ensure highly accurate categorization.
 - Added a comprehensive list of fallback Sub Types for all categories (`ATGO`, `FINGO`, etc.) and injected their definitions into the Gemini prompt for high accuracy.
 - Updated the Web UI to dynamically filter the `Sub Type` dropdown based on the selected `Main Type` in the row.
+- Updated AI prompt to extract dates directly from log entries and format them as `YYYY-MM-DD`.
+- Implemented `localStorage` auto-drafting in the Web UI to persist manual edits before syncing.
 
 ## [1.0.0] - 2026-08-18
 

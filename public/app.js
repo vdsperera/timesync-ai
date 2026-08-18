@@ -20,6 +20,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (res.ok) {
             validCategories = await res.json();
             console.log("Categories loaded:", validCategories);
+            
+            // Check for drafts
+            const draft = localStorage.getItem('timesync_draft');
+            if (draft) {
+                try {
+                    currentResults = JSON.parse(draft);
+                    if (currentResults.length > 0) {
+                        renderTable(currentResults);
+                        inputSection.classList.add('hidden');
+                        reviewSection.classList.remove('hidden');
+                    }
+                } catch (e) {
+                    localStorage.removeItem('timesync_draft');
+                }
+            }
         } else {
             console.error("Failed to load categories.");
             inputError.textContent = "Warning: Failed to load Notion categories. AI categorization may be inaccurate.";
@@ -63,6 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const data = await res.json();
             currentResults = data.results;
             
+            saveDraft();
             renderTable(currentResults);
             
             // Switch view
@@ -79,6 +95,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // 3. Render table
+    function saveDraft() {
+        if (currentResults.length > 0) {
+            localStorage.setItem('timesync_draft', JSON.stringify(currentResults));
+        } else {
+            localStorage.removeItem('timesync_draft');
+        }
+    }
+
     function createOptions(options, selectedValue) {
         return options.map(opt => `<option value="${escapeHtml(opt)}" ${opt === selectedValue ? 'selected' : ''}>${escapeHtml(opt)}</option>`).join('');
     }
@@ -97,6 +121,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             tr.innerHTML = `
                 <td><code>${escapeHtml(result.originalText)}</code></td>
+                <td>
+                    <input type="date" aria-label="Edit date" class="edit-date" data-idx="${idx}" value="${escapeHtml(result.date || '')}" style="width: 120px; background: transparent; border: 1px solid var(--border); color: var(--text-primary); padding: 4px 8px; border-radius: 4px;">
+                </td>
                 <td>
                     <input type="text" aria-label="Edit duration" class="edit-duration" data-idx="${idx}" value="${escapeHtml(result.duration || '')}" placeholder="0.0H" style="width: 70px; background: transparent; border: 1px solid var(--border); color: var(--text-primary); padding: 4px 8px; border-radius: 4px;">
                 </td>
@@ -132,10 +159,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         };
 
+        document.querySelectorAll('.edit-date').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const idx = e.target.getAttribute('data-idx');
+                currentResults[idx].date = e.target.value;
+                saveDraft();
+                clearErrorState(e);
+            });
+        });
+
         document.querySelectorAll('.edit-duration').forEach(input => {
             input.addEventListener('input', (e) => {
                 const idx = e.target.getAttribute('data-idx');
                 currentResults[idx].duration = e.target.value;
+                saveDraft();
                 clearErrorState(e);
             });
         });
@@ -155,6 +192,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 subTypeSelect.innerHTML = '<option value="">-- Select --</option>' + createOptions(relevantSubTypes, currentResults[idx].subType);
                 
+                saveDraft();
                 clearErrorState(e);
             });
         });
@@ -162,6 +200,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             select.addEventListener('change', (e) => {
                 const idx = e.target.getAttribute('data-idx');
                 currentResults[idx].subType = e.target.value;
+                saveDraft();
                 clearErrorState(e);
             });
         });
@@ -184,16 +223,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         syncStatus.style.background = 'rgba(99, 102, 241, 0.1)';
         syncStatus.style.color = 'var(--accent)';
         syncStatus.textContent = "Syncing to Notion...";
-        
-        // Add current date if needed
-        const today = new Date().toISOString().split('T')[0];
-        const payload = currentResults.map(r => ({ ...r, date: today }));
 
         try {
             const res = await fetch('/api/sync', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ entries: payload })
+                body: JSON.stringify({ entries: currentResults })
             });
 
             const data = await res.json();
@@ -218,6 +253,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     syncStatus.style.color = '#10b981';
                     syncStatus.style.background = 'rgba(16, 185, 129, 0.1)';
                     currentResults = [];
+                    saveDraft();
                     renderTable(currentResults);
                     
                     setTimeout(() => {
