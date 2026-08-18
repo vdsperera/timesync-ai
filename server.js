@@ -168,7 +168,9 @@ Sub Type Definitions: ${JSON.stringify(subTypeDefinitions, null, 2)}
 Today's date is: ${todayDate}.
 
 For each entry, extract the duration (e.g. "0.2H"). Also extract the date if one is mentioned (e.g. "yesterday", "Aug 17"). If a date is mentioned, convert it to YYYY-MM-DD format. If no date is mentioned, default to today's date (${todayDate}).
-Then suggest the best matching Main Type and Sub Type. If a line is malformed or you cannot confidently categorize it, set isAiFailure to true and leave duration, mainType, and subType as empty strings. DO NOT hallucinate categories that are not in the valid lists.
+Then suggest the best matching Main Type and Sub Type. 
+IMPORTANT: If an entry is simply a date header (e.g., "2026.08.16") or contains no actual time-tracking activity, completely ignore it and DO NOT include it in the output JSON array. 
+If a line appears to be an activity but is malformed, set isAiFailure to true and leave duration, mainType, and subType as empty strings. DO NOT hallucinate categories that are not in the valid lists.
 
 Return a JSON array of objects with this exact structure:
 [
