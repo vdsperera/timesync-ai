@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - Hardcoded fallback values for `Main Type` in Notion category fetcher to explicitly use user-provided list: `ATGO`, `FINGO`, `FAMGO`, `PHYGO`, `EDGO`, `PLEAGO`, `CARGO`.
 - Injected semantic definitions for all `Main Type` acronyms into the Gemini system prompt to ensure highly accurate categorization.
 - Added a comprehensive list of fallback Sub Types for all categories (`ATGO`, `FINGO`, etc.) and injected their definitions into the Gemini prompt for high accuracy.
+- Updated the Web UI to dynamically filter the `Sub Type` dropdown based on the selected `Main Type` in the row.
 
 ## [1.0.0] - 2026-08-18
 

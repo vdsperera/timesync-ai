@@ -16,7 +16,11 @@ GET /api/categories
 ```json
 {
   "mainTypes": ["ATGO", "FINGO", "FAMGO", "PHYGO", "EDGO", "PLEAGO", "CARGO"],
-  "subTypes": ["hygiene", "general coding"]
+  "subTypes": ["Myself", "Family Member", "House Maintenance", "Pets"],
+  "subTypeMapping": {
+    "FAMGO": ["Myself", "Family Member", "House Maintenance", "Pets", "Chores"],
+    "ATGO": ["Meditation/Mindfulness", "Journaling/Reflection", "Therapy/Mental Health", "Goal Setting"]
+  }
 }
 ```
 *Server Error (502 Bad Gateway)*

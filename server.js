@@ -68,7 +68,17 @@ async function getNotionCategories() {
         );
     }
 
-    return { mainTypes, subTypes };
+    const subTypeMapping = {
+        "FAMGO": ["Myself", "Family Member", "House Maintenance", "Pets", "Chores"],
+        "ATGO": ["Meditation/Mindfulness", "Journaling/Reflection", "Therapy/Mental Health", "Goal Setting"],
+        "FINGO": ["Budgeting & Bills", "Investing", "Income Generation", "Taxes/Admin"],
+        "PHYGO": ["Gym/Strength", "Cardio/Sports", "Meal Prep", "Medical"],
+        "EDGO": ["Coursework", "Reading", "Skill Practice", "Research"],
+        "PLEAGO": ["Gaming", "Screen Time", "Socializing", "Hobbies"],
+        "CARGO": ["Deep Work", "Meetings/Calls", "Admin/Emails", "Networking", "Job Search"]
+    };
+
+    return { mainTypes, subTypes, subTypeMapping };
 }
 
 app.get('/api/categories', async (req, res) => {

@@ -29,7 +29,11 @@
   ```json
   {
     "mainTypes": ["ATGO", "FINGO", "FAMGO", "PHYGO", "EDGO", "PLEAGO", "CARGO"],
-    "subTypes": ["English", "general coding", "team lead"]
+    "subTypes": ["Myself", "Family Member", "House Maintenance", "Pets"],
+    "subTypeMapping": {
+      "FAMGO": ["Myself", "Family Member", "House Maintenance", "Pets", "Chores"],
+      "ATGO": ["Meditation/Mindfulness", "Journaling/Reflection", "Therapy/Mental Health", "Goal Setting"]
+    }
   }
   ```
 - **Error codes**: `502 Bad Gateway` (Notion API unreachable), `401 Unauthorized` (Invalid Notion Key).

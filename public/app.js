@@ -91,6 +91,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 tr.classList.add('error-row');
             }
 
+            const relevantSubTypes = result.mainType && validCategories.subTypeMapping && validCategories.subTypeMapping[result.mainType] 
+                ? validCategories.subTypeMapping[result.mainType] 
+                : validCategories.subTypes;
+
             tr.innerHTML = `
                 <td><code>${escapeHtml(result.originalText)}</code></td>
                 <td>
@@ -105,7 +109,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <td>
                     <select aria-label="Edit sub type" class="edit-sub-type" data-idx="${idx}" style="background: var(--bg-surface); border: 1px solid var(--border); color: var(--text-primary); padding: 4px 8px; border-radius: 4px;">
                         <option value="">-- Select --</option>
-                        ${createOptions(validCategories.subTypes, result.subType)}
+                        ${createOptions(relevantSubTypes, result.subType)}
                     </select>
                 </td>
                 <td class="status-cell">
@@ -139,6 +143,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             select.addEventListener('change', (e) => {
                 const idx = e.target.getAttribute('data-idx');
                 currentResults[idx].mainType = e.target.value;
+                
+                // Update sub type dropdown dynamically
+                const subTypeSelect = e.target.closest('tr').querySelector('.edit-sub-type');
+                const relevantSubTypes = currentResults[idx].mainType && validCategories.subTypeMapping && validCategories.subTypeMapping[currentResults[idx].mainType] 
+                    ? validCategories.subTypeMapping[currentResults[idx].mainType] 
+                    : validCategories.subTypes;
+                
+                if (!relevantSubTypes.includes(currentResults[idx].subType)) {
+                    currentResults[idx].subType = "";
+                }
+                subTypeSelect.innerHTML = '<option value="">-- Select --</option>' + createOptions(relevantSubTypes, currentResults[idx].subType);
+                
                 clearErrorState(e);
             });
         });
