@@ -50,7 +50,22 @@ async function getNotionCategories() {
 
     // If API doesn't return properties for subTypes, use a fallback list so AI has something to work with
     if (subTypes.length === 0) {
-        subTypes.push("Myself", "Family Member", "House Maintenance", "Pets", "Coding", "Meetings", "Chores", "Admin");
+        subTypes.push(
+            // FAMGO
+            "Myself", "Family Member", "House Maintenance", "Pets",
+            // ATGO
+            "Meditation/Mindfulness", "Journaling/Reflection", "Therapy/Mental Health", "Goal Setting",
+            // FINGO
+            "Budgeting & Bills", "Investing", "Income Generation", "Taxes/Admin",
+            // PHYGO
+            "Gym/Strength", "Cardio/Sports", "Meal Prep", "Medical",
+            // EDGO
+            "Coursework", "Reading", "Skill Practice", "Research",
+            // PLEAGO
+            "Gaming", "Screen Time", "Socializing", "Hobbies",
+            // CARGO
+            "Deep Work", "Meetings/Calls", "Admin/Emails", "Networking", "Job Search"
+        );
     }
 
     return { mainTypes, subTypes };
@@ -92,10 +107,42 @@ app.post('/api/parse', async (req, res) => {
         };
 
         const subTypeDefinitions = {
+            // FAMGO
             "Myself": "Personal chores, taking care of oneself",
             "Family Member": "Time spent helping, talking to, or caring for family members",
             "House Maintenance": "Cleaning, cooking, DIY, grocery shopping",
-            "Pets": "Walking the dog, feeding pets"
+            "Pets": "Walking the dog, feeding pets",
+            // ATGO
+            "Meditation/Mindfulness": "Quiet time, breathing exercises",
+            "Journaling/Reflection": "Planning your week, writing thoughts",
+            "Therapy/Mental Health": "Appointments or specific mental health exercises",
+            "Goal Setting": "Reviewing goals, planning next steps",
+            // FINGO
+            "Budgeting & Bills": "Paying rent, balancing the checkbook",
+            "Investing": "Researching stocks, managing portfolios",
+            "Income Generation": "Side hustles, selling things online",
+            "Taxes/Admin": "Doing tax returns, managing paperwork",
+            // PHYGO
+            "Gym/Strength": "Weightlifting, structured workouts",
+            "Cardio/Sports": "Running, cycling, playing sports",
+            "Meal Prep": "Cooking healthy food specifically for the week",
+            "Medical": "Doctor/Dentist appointments, sick time",
+            // EDGO
+            "Coursework": "Watching lectures, taking formal classes",
+            "Reading": "Reading educational books, articles",
+            "Skill Practice": "Practicing coding, a language, or an instrument",
+            "Research": "Going down a Wikipedia rabbit hole on a useful topic",
+            // PLEAGO
+            "Gaming": "Video games, board games",
+            "Screen Time": "Movies, TV, YouTube, scrolling",
+            "Socializing": "Hanging out with friends, parties",
+            "Hobbies": "Art, music, reading fiction",
+            // CARGO
+            "Deep Work": "Focused, uninterrupted project work",
+            "Meetings/Calls": "Zoom calls, syncs, standups",
+            "Admin/Emails": "Replying to Slack, organizing your inbox",
+            "Networking": "LinkedIn, catching up with colleagues",
+            "Job Search": "Updating resume, applying for roles"
         };
 
         const prompt = `You are a data parsing assistant. Your task is to extract information from an array of free-form time tracking text entries and categorize them strictly into the provided Notion categories.
