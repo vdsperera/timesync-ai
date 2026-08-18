@@ -67,8 +67,14 @@
 - **Auth requirement**: None (Localhost only).
 - **Idempotency**: Idempotent.
 
-### 2.3 `POST /api/sync`
-- **Method/Endpoint**: `POST /api/sync`
+### 2.3 Notion Sync API (`/api/sync`)
+- **Endpoint**: `/api/sync`
+- **Method**: `POST`
+- **Description**: Validates structured data and synchronizes it with the configured Notion database.
+- **Behavior**: 
+  1. Identifies unique dates in the incoming payload.
+  2. Queries Notion and archives (deletes) any existing pages matching those dates to prevent duplicates.
+  3. Sequentially creates new Notion pages for the parsed entries.
 - **Request shape**:
   ```json
   {

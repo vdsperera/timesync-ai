@@ -227,7 +227,32 @@ app.post('/api/sync', async (req, res) => {
         let successCount = 0;
         let failedEntries = [];
 
-        // Process sequentially to respect rate limits (Notion is strict ~3 req/sec)
+        // 1. Identify unique dates
+        const uniqueDates = [...new Set(entries.map(e => e.date).filter(Boolean))];
+
+        // 2. Query and archive existing entries for those dates
+        for (const dateStr of uniqueDates) {
+            try {
+                const queryRes = await notion.databases.query({
+                    database_id: process.env.NOTION_DATABASE_ID,
+                    filter: {
+                        property: "Date",
+                        date: { equals: dateStr }
+                    }
+                });
+
+                for (const page of queryRes.results) {
+                    await notion.pages.update({
+                        page_id: page.id,
+                        archived: true
+                    });
+                }
+            } catch (err) {
+                console.error(`Failed to clear existing entries for date ${dateStr}:`, err.message);
+            }
+        }
+
+        // 3. Process sequentially to insert new entries (Notion is strict ~3 req/sec)
         for (const entry of entries) {
             try {
                 const properties = {
