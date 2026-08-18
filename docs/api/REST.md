@@ -43,7 +43,7 @@ POST /api/parse
 ```json
 {
   "entries": [
-    "08.00 - 08.10 - 0.2H - morning wash"
+    "13.00 - 13.30 - 0.5H - grocery shopping"
   ]
 }
 ```
@@ -55,11 +55,11 @@ POST /api/parse
 {
   "results": [
     {
-      "originalText": "08.00 - 08.10 - 0.2H - Aug 17 quick wash",
+      "originalText": "08.00 - 08.45 - 0.75H - Aug 17 morning run",
       "date": "2026-08-17",
-      "duration": "0.2H",
+      "duration": "0.75H",
       "mainType": "PHYGO",
-      "subType": "hygiene",
+      "subType": "exercise",
       "isAiFailure": false
     }
   ]
@@ -92,10 +92,10 @@ POST /api/sync
 {
   "entries": [
     {
-      "originalText": "08.00 - 08.10 - 0.2H - morning wash",
-      "duration": "0.2H",
-      "mainType": "famgo",
-      "subType": "hygiene",
+      "originalText": "13.00 - 13.30 - 0.5H - grocery shopping",
+      "duration": "0.5H",
+      "mainType": "FAMGO",
+      "subType": "Chores",
       "date": "2026-08-17"
     }
   ]
@@ -119,10 +119,10 @@ POST /api/sync
   "failedEntries": [
     {
       "entry": {
-        "originalText": "08.00 - 08.10 - 0.2H - morning wash",
-        "duration": "0.2H",
-        "mainType": "famgo",
-        "subType": "hygiene",
+        "originalText": "13.00 - 13.30 - 0.5H - grocery shopping",
+        "duration": "0.5H",
+        "mainType": "FAMGO",
+        "subType": "Chores",
         "date": "2026-08-17"
       },
       "error": "Notion API error. Please try again."
