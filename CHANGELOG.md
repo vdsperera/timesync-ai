@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - Fixed a Notion sync bug (`502 Bad Gateway`) by correcting the exact case-sensitive column name for `"Regular hours"`.
 - Added a `Delete` button to each row in the interactive table so users can easily remove individual entries before syncing.
 - Added a full **Draft Library** system allowing users to manually save un-synced tables by date, load them later from the home screen, and manage them cleanly.
+- Added an **"Auto-cleanup on sync"** toggle switch so users can choose whether drafts are automatically removed after syncing.
 
 ## [1.0.0] - 2026-08-18
 

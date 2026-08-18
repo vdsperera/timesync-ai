@@ -13,6 +13,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Global state
     let validCategories = { mainTypes: [], subTypes: [] };
     let currentResults = [];
+    
+    // Init auto-cleanup toggle
+    const autoCleanupToggle = document.getElementById('autoCleanupToggle');
+    if (autoCleanupToggle) {
+        const storedPref = localStorage.getItem('timesync_auto_cleanup');
+        if (storedPref !== null) {
+            autoCleanupToggle.checked = storedPref === 'true';
+        }
+        autoCleanupToggle.addEventListener('change', (e) => {
+            localStorage.setItem('timesync_auto_cleanup', e.target.checked);
+        });
+    }
 
     // 1. Fetch categories on load
     try {
@@ -354,7 +366,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     syncStatus.style.color = '#10b981';
                     syncStatus.style.background = 'rgba(16, 185, 129, 0.1)';
                     
-                    if (currentResults.length > 0) {
+                    if (currentResults.length > 0 && autoCleanupToggle && autoCleanupToggle.checked) {
                         const date = currentResults[0].date || new Date().toISOString().split('T')[0];
                         const libraryJson = localStorage.getItem('timesync_library');
                         if (libraryJson) {
