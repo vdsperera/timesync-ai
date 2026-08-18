@@ -144,6 +144,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                         ? '<span class="status-badge error">Review Required</span>' 
                         : '<span class="status-badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">Ready</span>'}
                 </td>
+                <td>
+                    <button aria-label="Delete entry" class="delete-btn" data-idx="${idx}" style="background: transparent; border: none; color: var(--error); cursor: pointer; padding: 4px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </button>
+                </td>
             `;
             reviewTableBody.appendChild(tr);
         });
@@ -202,6 +210,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 currentResults[idx].subType = e.target.value;
                 saveDraft();
                 clearErrorState(e);
+            });
+        });
+
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idx = e.currentTarget.getAttribute('data-idx');
+                currentResults.splice(idx, 1);
+                saveDraft();
+                renderTable(currentResults);
+                
+                if (currentResults.length === 0) {
+                    reviewSection.classList.add('hidden');
+                    inputSection.classList.remove('hidden');
+                }
             });
         });
     }
