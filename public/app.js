@@ -35,13 +35,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                     localStorage.removeItem('timesync_draft');
                 }
             }
+            
+            renderDraftLibrary();
         } else {
             console.error("Failed to load categories.");
             inputError.textContent = "Warning: Failed to load Notion categories. AI categorization may be inaccurate.";
             inputError.classList.remove('hidden');
+            renderDraftLibrary();
         }
     } catch (err) {
         console.error("Network error loading categories:", err);
+        renderDraftLibrary();
     }
 
     // 2. Process logs
@@ -101,6 +105,58 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             localStorage.removeItem('timesync_draft');
         }
+    }
+
+    function renderDraftLibrary() {
+        const list = document.getElementById('draftList');
+        if (!list) return;
+        const libraryJson = localStorage.getItem('timesync_library');
+        const library = libraryJson ? JSON.parse(libraryJson) : {};
+        
+        list.innerHTML = '';
+        const keys = Object.keys(library).sort().reverse();
+        if (keys.length === 0) {
+            list.innerHTML = '<li class="hint">No saved drafts found.</li>';
+            return;
+        }
+
+        keys.forEach(date => {
+            const entries = library[date];
+            const li = document.createElement('li');
+            li.style = "display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border);";
+            li.innerHTML = `
+                <span style="color: var(--text-primary);">Draft: ${escapeHtml(date)} (${entries.length} entries)</span>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="secondary-btn load-lib-btn" data-date="${escapeHtml(date)}" style="padding: 2px 8px; font-size: 0.8rem;">Load</button>
+                    <button class="delete-lib-btn" aria-label="Delete draft" data-date="${escapeHtml(date)}" style="background: transparent; border: none; color: var(--error); cursor: pointer; padding: 2px 4px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+            list.appendChild(li);
+        });
+
+        document.querySelectorAll('.load-lib-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const date = e.currentTarget.getAttribute('data-date');
+                currentResults = library[date];
+                saveDraft();
+                renderTable(currentResults);
+                inputSection.classList.add('hidden');
+                reviewSection.classList.remove('hidden');
+            });
+        });
+        document.querySelectorAll('.delete-lib-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const date = e.currentTarget.getAttribute('data-date');
+                delete library[date];
+                localStorage.setItem('timesync_library', JSON.stringify(library));
+                renderDraftLibrary();
+            });
+        });
     }
 
     function createOptions(options, selectedValue) {
@@ -228,7 +284,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // 4. Sync Logic
+    // 4. Draft Library & Sync Logic
+    document.getElementById('saveDraftBtn')?.addEventListener('click', () => {
+        if (currentResults.length === 0) return;
+        
+        const libraryJson = localStorage.getItem('timesync_library');
+        const library = libraryJson ? JSON.parse(libraryJson) : {};
+        
+        const date = currentResults[0].date || new Date().toISOString().split('T')[0];
+        
+        library[date] = currentResults;
+        localStorage.setItem('timesync_library', JSON.stringify(library));
+        
+        renderDraftLibrary();
+        
+        const btn = document.getElementById('saveDraftBtn');
+        const originalText = btn.textContent;
+        btn.textContent = "Saved!";
+        btn.style.color = "#10b981";
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.color = "";
+        }, 2000);
+    });
+
     syncBtn.addEventListener('click', async () => {
         if (currentResults.length === 0) return;
 
@@ -274,6 +353,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                     syncStatus.textContent = `Successfully synced ${data.successCount} entries!`;
                     syncStatus.style.color = '#10b981';
                     syncStatus.style.background = 'rgba(16, 185, 129, 0.1)';
+                    
+                    if (currentResults.length > 0) {
+                        const date = currentResults[0].date || new Date().toISOString().split('T')[0];
+                        const libraryJson = localStorage.getItem('timesync_library');
+                        if (libraryJson) {
+                            const library = JSON.parse(libraryJson);
+                            if (library[date]) {
+                                delete library[date];
+                                localStorage.setItem('timesync_library', JSON.stringify(library));
+                                renderDraftLibrary();
+                            }
+                        }
+                    }
+
                     currentResults = [];
                     saveDraft();
                     renderTable(currentResults);

@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - Implemented `localStorage` auto-drafting in the Web UI to persist manual edits before syncing.
 - Fixed a Notion sync bug (`502 Bad Gateway`) by correcting the exact case-sensitive column name for `"Regular hours"`.
 - Added a `Delete` button to each row in the interactive table so users can easily remove individual entries before syncing.
+- Added a full **Draft Library** system allowing users to manually save un-synced tables by date, load them later from the home screen, and manage them cleanly.
 
 ## [1.0.0] - 2026-08-18
 

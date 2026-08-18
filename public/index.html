@@ -37,6 +37,16 @@
                         </svg>
                     </button>
                 </div>
+                
+                <div class="card draft-library" id="draftLibrary" style="margin-top: 1.5rem;">
+                    <div class="card-header" style="margin-bottom: 0.5rem;">
+                        <h2 style="font-size: 1rem; color: var(--text-primary); margin: 0;">Saved Drafts</h2>
+                    </div>
+                    <p class="hint">Load past entries you haven't synced yet.</p>
+                    <ul id="draftList" style="list-style: none; padding: 0; margin-top: 1rem;">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
             </section>
 
             <section class="review-section hidden" id="reviewSection">
@@ -68,12 +78,15 @@
                     
                     <div class="actions">
                         <button id="backBtn" class="secondary-btn">Back</button>
-                        <button id="syncBtn" class="primary-btn sync-btn">
-                            <span>Sync to Notion</span>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                        </button>
+                        <div style="margin-left: auto; display: flex; gap: 0.5rem;">
+                            <button id="saveDraftBtn" class="secondary-btn">Save to Library</button>
+                            <button id="syncBtn" class="primary-btn sync-btn">
+                                <span>Sync to Notion</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
