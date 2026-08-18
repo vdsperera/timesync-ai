@@ -50,7 +50,7 @@ async function getNotionCategories() {
 
     // If API doesn't return properties for subTypes, use a fallback list so AI has something to work with
     if (subTypes.length === 0) {
-        subTypes.push("Coding", "Meetings", "Chores", "Admin");
+        subTypes.push("Myself", "Family Member", "House Maintenance", "Pets", "Coding", "Meetings", "Chores", "Admin");
     }
 
     return { mainTypes, subTypes };
@@ -91,11 +91,19 @@ app.post('/api/parse', async (req, res) => {
             "CARGO": "career related things"
         };
 
+        const subTypeDefinitions = {
+            "Myself": "Personal chores, taking care of oneself",
+            "Family Member": "Time spent helping, talking to, or caring for family members",
+            "House Maintenance": "Cleaning, cooking, DIY, grocery shopping",
+            "Pets": "Walking the dog, feeding pets"
+        };
+
         const prompt = `You are a data parsing assistant. Your task is to extract information from an array of free-form time tracking text entries and categorize them strictly into the provided Notion categories.
 
 Valid Main Types: ${JSON.stringify(categories.mainTypes)}
 Main Type Definitions: ${JSON.stringify(mainTypeDefinitions, null, 2)}
 Valid Sub Types: ${JSON.stringify(categories.subTypes)}
+Sub Type Definitions: ${JSON.stringify(subTypeDefinitions, null, 2)}
 
 For each entry, extract the duration (e.g. "0.2H") and suggest the best matching Main Type and Sub Type. If a line is malformed or you cannot confidently categorize it, set isAiFailure to true and leave duration, mainType, and subType as empty strings. DO NOT hallucinate categories that are not in the valid lists.
 

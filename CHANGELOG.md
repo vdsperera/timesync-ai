@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Changed
 - Hardcoded fallback values for `Main Type` in Notion category fetcher to explicitly use user-provided list: `ATGO`, `FINGO`, `FAMGO`, `PHYGO`, `EDGO`, `PLEAGO`, `CARGO`.
 - Injected semantic definitions for all `Main Type` acronyms into the Gemini system prompt to ensure highly accurate categorization.
+- Added `Myself`, `Family Member`, `House Maintenance`, and `Pets` as fallback Sub Types for FAMGO and injected their definitions into the Gemini prompt.
 
 ## [1.0.0] - 2026-08-18
 
