@@ -233,15 +233,26 @@ app.post('/api/sync', async (req, res) => {
         // 2. Query and archive existing entries for those dates
         for (const dateStr of uniqueDates) {
             try {
-                const queryRes = await notion.databases.query({
-                    database_id: process.env.NOTION_DATABASE_ID,
-                    filter: {
-                        property: "Date",
-                        date: { equals: dateStr }
-                    }
+                // The @notionhq/client version installed is missing databases.query, so we use native fetch
+                const queryRes = await fetch(`https://api.notion.com/v1/databases/${process.env.NOTION_DATABASE_ID}/query`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${process.env.NOTION_API_KEY}`,
+                        'Notion-Version': '2022-06-28',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        filter: { property: "Date", date: { equals: dateStr } }
+                    })
                 });
+                
+                if (!queryRes.ok) {
+                    throw new Error(`Notion API error: ${queryRes.status} ${queryRes.statusText}`);
+                }
+                
+                const queryData = await queryRes.json();
 
-                for (const page of queryRes.results) {
+                for (const page of queryData.results) {
                     await notion.pages.update({
                         page_id: page.id,
                         archived: true
