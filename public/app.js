@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         reviewTableBody.innerHTML = '';
         results.forEach((result, idx) => {
             const tr = document.createElement('tr');
-            if (result.isAiFailure) {
+            if (result.isAiFailure || !result.date) {
                 tr.classList.add('error-row');
             }
 
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </select>
                 </td>
                 <td class="status-cell">
-                    ${result.isAiFailure 
+                    ${(result.isAiFailure || !result.date)
                         ? '<span class="status-badge error">Review Required</span>' 
                         : '<span class="status-badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">Ready</span>'}
                 </td>
@@ -227,11 +227,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Add event listeners to update state and clear error styling
         const clearErrorState = (e) => {
             const tr = e.target.closest('tr');
-            if (tr.classList.contains('error-row')) {
-                tr.classList.remove('error-row');
-                tr.querySelector('.status-cell').innerHTML = '<span class="status-badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">Ready</span>';
-                const idx = e.target.getAttribute('data-idx');
-                currentResults[idx].isAiFailure = false;
+            const idx = e.target.getAttribute('data-idx');
+            const r = currentResults[idx];
+            if (r.date && r.duration && r.mainType && r.subType) {
+                if (tr.classList.contains('error-row')) {
+                    tr.classList.remove('error-row');
+                    tr.querySelector('.status-cell').innerHTML = '<span class="status-badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">Ready</span>';
+                    r.isAiFailure = false;
+                }
+            } else {
+                tr.classList.add('error-row');
+                tr.querySelector('.status-cell').innerHTML = '<span class="status-badge error">Review Required</span>';
             }
         };
 
@@ -323,10 +329,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     syncBtn.addEventListener('click', async () => {
         if (currentResults.length === 0) return;
 
-        // Prevent syncing if there are still unresolved AI failures
-        const hasFailures = currentResults.some(r => r.isAiFailure);
-        if (hasFailures) {
-            alert("Please resolve all items marked 'Review Required' before syncing.");
+        let hasErrors = currentResults.some(r => r.isAiFailure || !r.date);
+        if (hasErrors) {
+            alert("Please fix the highlighted rows (missing dates or categories) before syncing.");
             return;
         }
 
