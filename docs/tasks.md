@@ -165,3 +165,28 @@ Risk / notes: UI state management complexity.
 TASK-001 -> TASK-002 -> TASK-003 -> TASK-004 -> TASK-007 -> TASK-008
 
 *(Note: Layer 6 Hardening is implicit in the acceptance conditions for the backend tasks, as error handling is explicitly tested there).*
+
+## Future Backlog
+
+```
+ID: TASK-011
+Title: Bulk edit and delete operations in review table
+Layer: 5
+Linked component: Web UI
+Input: User feedback regarding tedious manual entry when multiple rows lack dates.
+Output: Implement checkbox selection for rows in the review table. Provide a bulk action menu to apply a single Date, Main Type, Sub Type, or to Delete all selected rows simultaneously.
+Estimated size: M
+```
+
+```
+ID: TASK-012
+Title: Local file system log extraction workflow
+Layer: 4, 5
+Linked component: Web UI, Local Backend API
+Input: User desire to automatically pull entries from daily files in a specific local directory instead of copy-pasting.
+Output: 
+1. A backend endpoint to scan a local directory for files (named by date) and intelligently extract only the time-tracking lines, ignoring unrelated journaling info.
+2. A frontend UI to trigger the scan, view the extracted raw text grouped by date, and allow human review/editing of the raw text *before* sending it to the AI for processing.
+3. Ability to process the extracted dates one by one or in bulk.
+Estimated size: L
+```
