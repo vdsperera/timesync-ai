@@ -1,4 +1,4 @@
-# System Architecture — TimeSync AI
+# System Architecture — TimeSync
 
 ## 1. Component Map
 

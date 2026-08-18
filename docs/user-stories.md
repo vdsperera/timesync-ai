@@ -1,4 +1,4 @@
-# User Stories — TimeSync AI
+# User Stories — TimeSync
 
 ## US-001
 **Title:** Enter raw text logs

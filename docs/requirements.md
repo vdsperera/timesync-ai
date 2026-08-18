@@ -1,4 +1,4 @@
-# Refined Requirements Document — TimeSync AI
+# Refined Requirements Document — TimeSync
 
 ## 1. Issues List
 

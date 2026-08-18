@@ -1,9 +1,9 @@
-# TimeSync AI
+# TimeSync
 
-TimeSync AI is a personal, offline-first tool designed to seamlessly process and categorize your daily raw text logs into structured Notion entries. By leveraging the Gemini API to parse natural language durations and categories, it eliminates manual data entry while maintaining a fast, lightweight, and secure local environment. 
+TimeSync is a personal, offline-first tool designed to seamlessly process and categorize your daily raw text logs into structured Notion entries. By leveraging an LLM parser for natural language durations and categories, it eliminates manual data entry while maintaining a fast, lightweight, and secure local environment. 
 
 ### Key Features
-- **AI-Powered Parsing**: Converts messy raw text (e.g., `10:00 - 0.5H - morning sync`) into structured Notion data.
+- **Smart Parsing**: Converts messy raw text (e.g., `10:00 - 0.5H - morning sync`) into structured Notion data.
 - **Draft Library**: Locally saves your processed logs in your browser across multiple days, allowing you to batch review and sync them whenever you're ready.
 - **Daily Overwrite Strategy**: Automatically finds and archives old duplicated entries in Notion for the synced dates before pushing the new ones, making the sync 100% idempotent.
 
@@ -44,8 +44,8 @@ Create a `.env` file in the root directory with the following variables:
    ```
 2. Open your browser and navigate to `http://localhost:3000`.
 3. Paste your raw text logs into the input area. (Tip: You can use a date header like `Aug 16` at the top of your logs).
-4. Click "Process Logs" to use AI categorization.
-5. Review the AI's suggestions in the table, making any necessary manual corrections. You can also "Save to Library" to process later.
+4. Click "Process Logs" to categorize the entries.
+5. Review the suggestions in the table, making any necessary manual corrections. You can also "Save to Library" to process later.
 6. Click "Sync to Notion". The app will automatically clear existing logs for those dates in Notion and push the updated batch.
 
 ## Project structure

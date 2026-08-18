@@ -1,4 +1,4 @@
-# Product Brief — TimeSync AI
+# Product Brief — TimeSync
 
 ## Problem
 The user tracks their day in a local, offline-first free-form text file to maintain speed and avoid internet dependencies. However, to analyze this data in Notion, entries must be tagged with specific "Main Type" and "Sub Type" categories. Manually tagging every free-form entry is tedious, time-consuming, and breaks the low-friction nature of the offline text file workflow.
@@ -9,7 +9,7 @@ The user tracks their day in a local, offline-first free-form text file to maint
 - Not for: Enterprise teams, multiple concurrent users, or complex billing scenarios.
 
 ## Value Proposition
-For the personal user who tracks time in a fast, free-form local text file, TimeSync AI is a web utility that uses AI to automatically categorize daily logs into predefined Notion properties. Unlike manual tagging or complex time-tracking apps, it preserves the offline-first text workflow while eliminating the friction of data entry into Notion.
+For the personal user who tracks time in a fast, free-form local text file, TimeSync is a web utility that automatically categorizes daily logs into predefined Notion properties. Unlike manual tagging or complex time-tracking apps, it preserves the offline-first text workflow while eliminating the friction of data entry into Notion.
 
 ## Business Model
 - Revenue model: Internal/personal tool (Free).

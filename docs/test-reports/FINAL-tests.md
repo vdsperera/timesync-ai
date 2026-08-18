@@ -1,7 +1,7 @@
 # Test Generation Report — Final Suite
 
 ## Overview
-A comprehensive automated test suite has been implemented using `jest` and `supertest` to test the TimeSync AI local backend (`server.js`). All external dependencies (`@notionhq/client` and `@google/genai`) are fully mocked to ensure fast, deterministic tests that do not rely on network connectivity or consume real API quota.
+A comprehensive automated test suite has been implemented using `jest` and `supertest` to test the TimeSync local backend (`server.js`). All external dependencies (`@notionhq/client` and `@google/genai`) are fully mocked to ensure fast, deterministic tests that do not rely on network connectivity or consume real API quota.
 
 ## Results
 - **Status:** All passing

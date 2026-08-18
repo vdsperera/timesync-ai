@@ -1,7 +1,7 @@
 {
   "name": "timesync-ai",
   "version": "1.0.0",
-  "description": "TimeSync AI - Local Notion integration tool",
+  "description": "TimeSync - Local Notion integration tool",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

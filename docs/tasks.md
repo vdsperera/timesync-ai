@@ -1,4 +1,4 @@
-# Task List — TimeSync AI
+# Task List — TimeSync
 
 ## Layer 1: Infrastructure
 

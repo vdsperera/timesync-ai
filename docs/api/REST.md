@@ -1,4 +1,4 @@
-# TimeSync AI REST API
+# TimeSync REST API
 
 The local backend exposes the following internal endpoints for the frontend to consume. These endpoints proxy requests to Notion and Gemini securely.
 
